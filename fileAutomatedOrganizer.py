@@ -1,4 +1,6 @@
-from os import scandir 
+from os.path import splitext, exists, join
+from os import scandir, rename 
+from shutil import move
 
 
 import logging
@@ -18,7 +20,15 @@ audio_extensions = [".aac", ".flac", ".m4a", ".mp3", ".wav", ".wma"]
 image_extensions = [".ai", ".arw", ".bmp", ".cr2", ".dib", ".eps", ".gif", ".heic", ".heif", ".ico", ".ind", ".indd", ".indt", ".j2k", ".jpf", ".jpf", ".jpe", ".jpeg", ".jfif", ".jfi", ".jif", ".jp2", ".jpm", ".jpx", ".jpe", ".jpg", ".k25", ".mj2", ".nrw", ".png", ".psd", ".raw", ".svg", ".svgz", ".tif", ".tiff", ".webp"]
 document_extensions = [".doc", ".docx", ".odt", ".pdf", ".ppt", ".pptx", ".xls", ".xlsx"]
 
+def change_filename(dest, name):
+    filename, extension = splitext(name) 
+    counter = 1
+    
+    while exists(f"{dest}/{name}"):
+        name = f"{filename}({str(counter)}){extension}"
+        counter =+ 1
 
+    return name
 
 class FileHandler(LoggingEventHandler):
     def on_modified(self, event):

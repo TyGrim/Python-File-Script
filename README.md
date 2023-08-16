@@ -1,0 +1,1 @@
+Allows python script to access files on the computer

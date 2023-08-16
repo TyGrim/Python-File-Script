@@ -8,7 +8,7 @@ from watchdog.events import LoggingEventHandler
 #local folders to monitor
 source_dir = "/Users/ithai/Downloads"
 destination_dir_music = "/Users/ithai/Music"
-destination_dir_video = "/Users/ithai/Movies"
+destination_dir_videos = "/Users/ithai/Movies"
 destination_dir_images = "/Users/ithai/Pictures"
 destination_dir_documents = "/Users/ithai/Documents/"
 
@@ -20,7 +20,35 @@ document_extensions = [".doc", ".docx", ".odt", ".pdf", ".ppt", ".pptx", ".xls",
 
 
 
+class FileHandler(LoggingEventHandler):
+    def on_modified(self, event):
+        with scandir(source_dir) as entries:
+            for entry in entries:
+                name = entry.name
+                self.check_audio_files(entry, name)
+                self.check_video_files(entry, name)
+                self.check_image_files(entry, name)
+                self.check_document_files(entry, name)
 
+def check_audio_files(self, entry, name):
+    for audio_extension in audio_extensions:
+        if name.endswith(audio_extension) or name.endwith(audio_extension.upper()):
+            dest = destination_dir_music
+
+def check_video_files(self, entry, name):
+    for video_extension in video_extensions:
+        if name.endswith(video_extension) or name.endswith(video_extension.upper()):
+            dest = destination_dir_videos
+
+def check_image_files(self, entry, name):
+    for image_extension in image_extensions:
+        if name.endwith(image_extension) or name.endswith(image_extension.upper()):
+            dest = destination_dir_images
+
+def check_document_files(self, entry, name):
+    for document_extension in document_extensions:
+        if name.endswith(document_extension) or name.endswith(document_extension.upper()):
+            dest = destination_dir_documents
 
 
 if __name__ == "__main__":
@@ -28,7 +56,7 @@ if __name__ == "__main__":
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
     path = source_dir
-    event_handler = LoggingEventHandler()
+    event_handler = FileHandler()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
     observer.start()

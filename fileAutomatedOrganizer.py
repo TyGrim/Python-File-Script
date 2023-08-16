@@ -15,6 +15,8 @@ destination_dir_videos = "/Users/ithai/Movies"
 destination_dir_images = "/Users/ithai/Pictures"
 destination_dir_documents = "/Users/ithai/Documents/"
 
+#test
+
 #supported file types
 video_extensions = [".avi", ".avchd", ".flv", ".mov", ".mp2", ".mp4", ".mp4v", ".m4v", ".mpe", ".mpeg", ".mpg", ".mpv", ".ogg", ".qt", ".swf", ".webm", ".wmv"]
 audio_extensions = [".aac", ".flac", ".m4a", ".mp3", ".wav", ".wma"]

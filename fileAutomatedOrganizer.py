@@ -30,6 +30,14 @@ def change_filename(dest, name):
 
     return name
 
+def move_file(dest, entry, name):
+    if exists(f"{dest}/{name}"):
+        change_filename = change_filename(dest, name)
+        oldName = join(dest, name)
+        newName = join(dest, change_filename)
+        rename(oldName, newName)
+    move(entry, dest)
+
 class FileHandler(LoggingEventHandler):
     def on_modified(self, event):
         with scandir(source_dir) as entries:
@@ -44,21 +52,29 @@ def check_audio_files(self, entry, name):
     for audio_extension in audio_extensions:
         if name.endswith(audio_extension) or name.endwith(audio_extension.upper()):
             dest = destination_dir_music
+        move(dest, entry, name)
+        logging.info("Moved audio file: {name}")
 
 def check_video_files(self, entry, name):
     for video_extension in video_extensions:
         if name.endswith(video_extension) or name.endswith(video_extension.upper()):
             dest = destination_dir_videos
+        move(dest, entry, name)
+        logging.info("Moved video file: {name}")
 
 def check_image_files(self, entry, name):
     for image_extension in image_extensions:
         if name.endwith(image_extension) or name.endswith(image_extension.upper()):
             dest = destination_dir_images
+        move(dest, entry, name)
+        logging.info("Moved image file: {name}")
 
 def check_document_files(self, entry, name):
     for document_extension in document_extensions:
         if name.endswith(document_extension) or name.endswith(document_extension.upper()):
             dest = destination_dir_documents
+        move(dest, entry, name)
+        logging.info("Moved doc file: {name}")
 
 
 if __name__ == "__main__":

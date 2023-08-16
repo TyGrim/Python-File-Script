@@ -1,2 +1,2 @@
 Allows python script to access files on the computer.
-Wathches for changes to downloads folder
+Uses watchdog to look for changes to downloads folder.

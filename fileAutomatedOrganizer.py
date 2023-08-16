@@ -1,11 +1,12 @@
 from os.path import splitext, exists, join
 from os import scandir, rename 
 from shutil import move
+from time import sleep
 
 
 import logging
 from watchdog.observers import Observer
-from watchdog.events import LoggingEventHandler
+from watchdog.events import FileSystemEventHandler
 
 #local folders to monitor
 source_dir = "/Users/ithai/Downloads"
@@ -38,7 +39,7 @@ def move_file(dest, entry, name):
         rename(oldName, newName)
     move(entry, dest)
 
-class FileHandler(LoggingEventHandler):
+class FileHandler(FileSystemEventHandler):
     def on_modified(self, event):
         with scandir(source_dir) as entries:
             for entry in entries:
@@ -87,8 +88,8 @@ if __name__ == "__main__":
     observer.schedule(event_handler, path, recursive=True)
     observer.start()
     try:
-        while observer.isAlive():
-            observer.join(1)
-    finally:
+        while True:
+            sleep(10)
+    except KeyboardInterrupt:
         observer.stop()
         observer.join()
